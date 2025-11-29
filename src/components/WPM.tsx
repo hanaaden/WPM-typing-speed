@@ -2,8 +2,6 @@ import { useEffect, useState } from "react"
 
 function WPM() {
 
-    const [sentence , setSentence] = useState("")
-
 const wordCollection = [
    
   "The sun sets beautifully over the mountains, casting a warm orange glow across the sky and reflecting in the calm river below.",
@@ -41,15 +39,14 @@ const wordCollection = [
 
 
 ]
+
+const [sentence , setSentence] = useState("")
 const [input , setInput] = useState("")
 const [counter , setCounter] = useState(0)
 const [time , setTime] = useState("")
 const [wpm , setWpm] = useState(0)
 const [start , setStart] = useState(false)
-
-
-// const [reset , setReset] = useState(false)
-
+const [disable , setDisable] = useState(false)
 
 const getter =()=>{
     let random = Math.floor(Math.random() * wordCollection.length)
@@ -61,24 +58,17 @@ useEffect(()=>{
     getter()
 },[])
 
-const der = ()=>{
-    
-}
-const inputHandler =(e)=>{
+const inputHandler =(e: React.ChangeEvent<HTMLInputElement>)=>{
   setInput(e.target.value)
   setStart(true)
- 
   const charInput = input.split("")
-   const charArr = sentence.split("")
- 
-  
-  for (let i = 0 ; i<charArr.length ; i++){
-    if(charArr[i] == charInput[i]){
-     setWpm(wpm + 1)
-    }else{
-        setWpm(wpm - 1)
+  let correct : number = 0
+    correct = (charInput.length /5)/1
+    if(counter == 60){
+      setDisable(true)
     }
-  }
+    setWpm(correct)
+ 
 }
 useEffect(()=>{
     
@@ -87,37 +77,31 @@ if(start){
     setCounter(counter + 1)
   } , 1000)
 
-  if (counter === 6){
+  if (counter === 60){
     setTime("times is up")
     setStart(false)
     return ()=> clearTimeout(timer)
   }
-
-  
 }
 
 })
 const reseter =()=>{
     setCounter(0)
-    // setReset(true)
     setInput("")
     setStart(false)
     setTime("")
-    
-
 }
-
 
   return (
     <>
-    <h1 className="text-green-200 flex flex-row justify-center text-6xl text-center">WPM typing speed ....</h1>
-   <h2 className="pl-12 mt-12 text-2xl">{sentence}</h2>
-   <h1>WPM : {wpm} </h1>
-   <input type="text " value={input} placeholder="enter here" onChange={inputHandler} className="p-2 mt-2 w-full  ml-12 bg-green-700 text-green-200 text-black" />
-    <h3>count : {counter}</h3>
-    <h3>YOUR TEXT = {input}</h3>
-    <h1>{time}</h1>
-    <button onClick={reseter} className="bg-green-400">reset</button>
+    <h1 className="text-green-200 text-3xl sm:text-4xl md:text-6xl text-center font-bold">WPM typing speed ....</h1>
+   <h2 className="text-center mt-12 text-2xl">{sentence}</h2>
+   <h1 className="pl-12 text-center">WPM : {wpm} </h1>
+   <input type="text " disabled={disable} value={input} placeholder="enter here" onChange={inputHandler} className="p-3 mt-4 w-full max-w-2xl mx-auto block bg-green-400 font-bold text-black rounded-md" />
+    <button className="p-3 mt-4 w-24 text-3xl max-w-2xl mx-auto block bg-green-400 font-bold text-black rounded-full">{counter}</button>
+    <h3 className="mt-2 text-base sm:text-lg px-4 text-center w-96 ">YOUR TEXT = {input}</h3>
+    <h1 className="pl-12 text-center text-red-500">{time}</h1>
+    <button onClick={reseter} className="p-3 mt-4 w-32 max-w-2xl mx-auto block bg-green-400 font-bold text-black rounded-md">reset</button>
     
     </>
   )
