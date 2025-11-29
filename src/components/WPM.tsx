@@ -96,7 +96,7 @@ const reseter =()=>{
     <>
     <h1 className="text-green-200 text-3xl sm:text-4xl md:text-6xl text-center font-bold">WPM typing speed ....</h1>
    <h2 className="text-center mt-12 text-2xl">{sentence}</h2>
-   <h1 className="mt-2  text-base sm:text-3xl px-4 text-center ">WPM : {wpm} </h1>
+   <h1 className="mt-2  sm:text-3xl px-4 text-center ">WPM : {wpm} </h1>
    <input type="text " disabled={disable} value={input} placeholder="enter here" onChange={inputHandler} className="p-3 mt-4 w-full max-w-2xl mx-auto block bg-green-400 font-bold text-black rounded-md" />
     <button className="p-3 mt-4 w-24 text-3xl max-w-2xl mx-auto block bg-green-400 font-bold text-black rounded-full">{counter}</button>
     <h3 className="mt-2 text-base sm:text-lg px-4 text-center w-96">YOUR TEXT = {input}</h3>
